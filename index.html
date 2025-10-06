@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>E-Bazaar • Product Showcase</title>
+  <meta name="description" content="A simple, attractive product gallery for small businesses in India. No backend required." />
+
+  <!-- Allow remote placeholders if your network permits. Local files and non-image fallbacks still work without this. -->
+  <meta http-equiv="Content-Security-Policy"
+        content="img-src 'self' data: https://picsum.photos https://source.unsplash.com https://images.unsplash.com;">
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Optional: Swiper (uncomment to enable the featured slider) -->
+  <!--
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  -->
+</head>
+<body>
+  <a href="#main" class="sr-only">Skip to content</a>
+
+  <!-- HERO -->
+  <header class="hero" role="banner">
+    <div class="container hero__inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">🛍️</div>
+        <div>
+          <h1 class="headline">E <span>Bazaar</span></h1>
+          <p class="tagline">Beautiful, fast product showcase. Made for India 🇮🇳</p>
+        </div>
+      </div>
+
+      <div class="ribbon">🎉 Festive Picks • New Arrivals • Special Savings</div>
+
+      <!-- Controls -->
+      <div class="controls" role="region" aria-label="Filters and Search">
+        <!-- Search -->
+        <div class="search" role="search">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path fill="currentColor" d="m21 21l-4.3-4.3m1.8-5.2A7.5 7.5 0 1 1 3 11.5 7.5 7.5 0 0 1 18.5 11.5z" opacity=".6"/></svg>
+          <input id="search" type="text" placeholder="Search products (press / to focus)" autocomplete="off" />
+          <button id="clearSearch" class="btn link" title="Clear search">Clear</button>
+        </div>
+
+        <!-- Category chips -->
+        <div class="filters" id="categoryChips" role="group" aria-label="Filter by category"></div>
+
+        <!-- Price + Sort -->
+        <div class="price-sort">
+          <div class="range" aria-label="Price range">
+            <span>Price</span>
+            <input id="minPrice" type="number" step="1" min="0" value="0" aria-label="Min price">
+            <span>–</span>
+            <input id="maxPrice" type="number" step="1" min="0" value="0" aria-label="Max price">
+          </div>
+          <label for="sort" class="sr-only">Sort by</label>
+          <select id="sort" aria-label="Sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="name-asc">Name: A → Z</option>
+            <option value="name-desc">Name: Z → A</option>
+            <option value="rating-desc">Rating: High → Low</option>
+          </select>
+          <button class="btn ghost" id="clearAll" type="button">Clear all</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="container" tabindex="-1">
+    <div class="results">
+      <small id="resultCount" aria-live="polite">Showing 0 products</small>
+    </div>
+
+    <!-- FEATURED (only visible if Swiper is present) -->
+    <section id="featuredSection" class="featured" aria-label="Featured" hidden>
+      <div class="featured__head">
+        <h2>Featured</h2>
+        <p class="muted">Hand-picked crowd favourites</p>
+      </div>
+      <div class="swiper">
+        <div class="swiper-wrapper" id="featuredWrapper"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <br/>
+    </section>
+
+    <!-- CATALOG -->
+    <section aria-label="Catalog">
+      <div id="grid" class="grid" role="list"></div>
+      <div id="empty" class="empty" hidden>😕 No products match your filters. Try clearing some filters or adjusting the price range.</div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-media">
+        <div class="gallery">
+          <div class="main" id="modalMainImage"></div>
+          <div class="thumbs" id="modalThumbs" aria-label="Image thumbnails"></div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h3 id="modalTitle"></h3>
+        <div class="stars" id="modalRating" aria-label="Rating"></div>
+        <div class="price" id="modalPrice"></div>
+        <p id="modalDesc" class="muted"></p>
+        <div id="modalTags" class="filters"></div>
+        <div class="modal-actions">
+          <button id="shareBtn" class="btn primary" type="button">Copy product link</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">Link copied</div>
+
+  <!-- JS (order matters) -->
+  <script defer src="js/products.js"></script>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
